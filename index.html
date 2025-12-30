@@ -1,23 +1,332 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Home</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <!--
-      Need a visual blank slate?
-      Remove all code in `styles.css`!
-    -->
-    <link rel="stylesheet" href="styles.css" />
-    <script type="module" src="script.js"></script>
-  </head>
-  <body>
-    <nav>
-      <a href="/" aria-current="page">Home</a>
-      <a href="/page2.html">Other page</a>
-    </nav>
-    <main>
-      <h1>Home page</h1>
-    </main>
-  </body>
-</html>
+    <style>
+        /* 기본 스타일 초기화 및 폰트 설정 */
+        body { font-family: 'Malgun Gothic', 'Dotum', 'Apple SD Gothic Neo', sans-serif; line-height: 1.8; color: #333; margin: 0; padding: 0; background-color: #f7f9fb; font-size: 16px; }
+        .container { max-width: 1200px; margin: 40px auto; padding: 30px; background-color: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.08); border-radius: 12px; }
+
+        /* 헤더 스타일 */
+        header { background-color: #004a99; color: #fff; padding: 25px 0; text-align: center; border-bottom: 5px solid #003366; }
+        header .container { padding: 0 20px; box-shadow: none; background-color: transparent; border-radius: 0; margin: 0 auto; }
+        header a { color: #fff; text-decoration: none; font-size: 2.2em; font-weight: bold; }
+
+        /* 내비게이션 스타일 */
+        nav { margin-bottom: 30px; border-bottom: 1px solid #ddd; padding: 10px 0; }
+        nav ul { list-style: none; padding: 0; margin: 0; display: flex; justify-content: space-around; background-color: #f1f1f1; border-radius: 8px; overflow: hidden; }
+        nav ul li a { display: block; padding: 15px 20px; text-decoration: none; color: #333; font-weight: bold; transition: background-color 0.3s, color 0.3s; }
+        nav ul li a:hover { background-color: #004a99; color: #fff; }
+
+        /* 컨텐츠 레이아웃 */
+        .content-wrap { display: flex; gap: 40px; }
+        .sidebar { flex: 1; min-width: 280px; padding: 20px; background-color: #f4f6f8; border-radius: 8px; position: sticky; top: 40px; height: fit-content; }
+        .main-content { flex: 3; }
+
+        /* 제목 및 텍스트 스타일 */
+        h1 { font-size: 2.5em; color: #004a99; text-align: center; margin-bottom: 20px; }
+        h2 { border-bottom: 3px solid #004a99; padding-bottom: 12px; color: #004a99; margin-top: 35px; font-size: 1.8em; }
+        h3 { color: #0066cc; margin-top: 30px; font-size: 1.5em; border-left: 5px solid #0066cc; padding-left: 15px; background-color: #fbfdff; padding-top: 5px; padding-bottom: 5px; }
+        h4 { color: #555; margin-top: 25px; font-size: 1.2em; font-weight: bold; }
+        p { margin-bottom: 1.5em; line-height: 1.9; text-align: justify; }
+        a { color: #0066cc; text-decoration: underline; }
+        a:hover { color: #004a99; }
+
+        /* 하이라이트 박스 및 목록 스타일 */
+        .highlight { background-color: #e6f7ff; padding: 20px; border-radius: 8px; border-left: 6px solid #0066cc; margin: 25px 0; }
+        .highlight strong { color: #004a99; font-weight: bold; }
+        ul.article-list { list-style: none; padding: 0; }
+        ul.article-list li { margin-bottom: 15px; padding: 10px; border-bottom: 1px dashed #ddd; }
+        ul.article-list li a { text-decoration: none; color: #333; display: block; }
+        ul.article-list li a:hover { color: #004a99; font-weight: bold; }
+
+        /* 사이드바 서브메뉴 스타일 */
+        .sidebar h2 { border-bottom: 2px solid #004a99; color: #004a99; padding-bottom: 10px; font-size: 1.4em; margin-top: 0; }
+        .sidebar ul.sub-menu { list-style: none; padding: 0; }
+        .sidebar ul.sub-menu li a { display: block; padding: 10px 15px; text-decoration: none; color: #555; border-radius: 5px; margin-bottom: 5px; transition: background-color 0.3s; }
+        .sidebar ul.sub-menu li a:hover { background-color: #e6f7ff; color: #004a99; font-weight: bold; }
+
+        /* 표 스타일 */
+        table { width: 100%; border-collapse: collapse; margin: 25px 0; font-size: 1em; }
+        table th, table td { border: 1px solid #ddd; padding: 15px; text-align: left; vertical-align: middle; }
+        table th { background-color: #f2f2f2; font-weight: bold; color: #444; }
+        table tr:nth-child(even) { background-color: #f9f9f9; }
+        table.comparison-table th { background-color: #eaf2ff; color: #004a99; }
+        
+        /* 인풋 필드 스타일 ( engagement ) */
+        .input-form { background-color: #fcfcfc; border: 1px solid #eee; padding: 20px; border-radius: 8px; margin-top: 30px; }
+        .input-form label { display: block; font-weight: bold; margin-bottom: 8px; color: #333; }
+        .input-form input[type="text"], .input-form input[type="number"], .input-form select { width: calc(100% - 22px); padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; font-size: 1em; box-sizing: border-box; }
+        .input-form button { background-color: #0066cc; color: #fff; border: none; padding: 15px 20px; border-radius: 5px; cursor: pointer; font-size: 1em; transition: background-color 0.3s; }
+        .input-form button:hover { background-color: #004a99; }
+        .form-result { margin-top: 20px; padding: 15px; border: 1px solid #d4edda; background-color: #f2fdf4; border-radius: 5px; font-weight: bold; color: #155724; }
+
+        /* 기타 스타일링 */
+        .note { color: #888; font-size: 0.9em; margin-top: 10px; padding-left: 10px; border-left: 3px solid #ccc; }
+        .section-separator { border-top: 1px solid #eee; margin-top: 40px; padding-top: 20px; }
+        .keyword-box { display: inline-block; background-color: #eaf2ff; color: #004a99; padding: 5px 10px; border-radius: 15px; font-size: 0.9em; margin: 5px; font-weight: bold; }
+        .graph-placeholder { background-color: #f0f0f0; height: 300px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #666; font-size: 1.2em; border: 1px dashed #ccc; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="/">착한실손보험 완벽 가이드</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <nav>
+            <ul class="main-menu">
+                <li><a href="#intro">실손보험 개요</a></li>
+                <li><a href="#generation4">4세대 특징 분석</a></li>
+                <li><a href="#noncover">비급여 특약 상세</a></li>
+                <li><a href="#compare">세대별 비교</a></li>
+                <li><a href="#renewal">가입/갱신 가이드</a></li>
+                <li><a href="#faq">자주 묻는 질문</a></li>
+            </ul>
+        </nav>
+
+        <div class="content-wrap">
+            <div class="sidebar">
+                <h2>실손보험 핵심 정보</h2>
+                <ul class="sub-menu">
+                    <li><a href="#intro">착한실손보험 정의</a></li>
+                    <li><a href="#diff_premium">보험료 차등제 분석</a></li>
+                    <li><a href="#noncover_detail">비급여 항목별 분석</a></li>
+                    <li><a href="#2026_change">2026년도 변화 전망</a></li>
+                    <li><a href="#enroll_guide">가입 전 체크리스트</a></li>
+                    <li><a href="#case_study">사례별 가입 전략</a></li>
+                    <li><a href="#claim">청구 절차 안내</a></li>
+                </ul>
+                <div class="input-form">
+                    <h4>실손보험료 간편 계산</h4>
+                    <form id="premium-calculator">
+                        <label for="age">나이:</label>
+                        <input type="number" id="age" name="age" placeholder="만 나이를 입력하세요" required>
+                        <label for="gender">성별:</label>
+                        <select id="gender" name="gender">
+                            <option value="male">남성</option>
+                            <option value="female">여성</option>
+                        </select>
+                        <label for="history">최근 2년간 진료 기록:</label>
+                        <select id="history" name="history">
+                            <option value="none">없음</option>
+                            <option value="minor">경증 치료</option>
+                            <option value="major">중증 치료</option>
+                        </select>
+                        <button type="button" onclick="calculatePremium()">예상 보험료 확인</button>
+                    </form>
+                    <div class="form-result" id="calculation-result" style="display:none;"></div>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <h1 id="intro">착한실손보험, 4세대 실손보험 핵심 가이드: 2026년 변화 전망 분석</h1>
+
+                <p>2021년 7월 출시된 4세대 실손보험은 '착한실손보험'이라는 별칭으로 불리며 기존 실손보험의 고질적인 문제점을 해결하고자 등장했습니다. 기존 세대 대비 저렴한 보험료를 내세우는 대신, 비급여 진료를 많이 이용하는 가입자에게 보험료 할증을 적용하는 '보험료 차등제'를 도입하여 논란의 중심에 서기도 했습니다. 이 가이드는 2026년까지 예상되는 변화와 함께 4세대 실손보험의 특징, 장단점, 가입 전략을 심층적으로 분석하여 현명한 선택을 돕는 것을 목표로 합니다.</p>
+
+                <div class="highlight">
+                    <p><strong>핵심 키워드 분석:</strong> 착한실손보험이란 무엇인가요? 일반적으로 4세대 실손보험을 지칭하는 용어입니다. 비급여 이용량에 따라 보험료가 달라지는 차등제를 핵심으로 하며, 보험료 안정화와 건전한 의료 이용을 유도하는 정책적 목표를 가지고 있습니다.</p>
+                    <p class="keyword-box">4세대 실손보험</p><p class="keyword-box">실손보험 비교</p><p class="keyword-box">비급여 특약</p><p class="keyword-box">실손보험료</p><p class="keyword-box">보험료 차등제</p>
+                </div>
+
+                <h2 id="generation4">4세대 실손보험의 주요 특징: 보험료 차등제와 보장 변화</h2>
+
+                <p>4세대 실손보험은 이전 세대와 비교하여 가장 큰 변화를 가져온 모델입니다. 금융당국은 과도한 의료 쇼핑과 보험료 인상 문제를 해결하기 위해 4세대를 설계했으며, 특히 비급여 항목에 대한 관리를 강화했습니다. 2026년에도 이 기조는 유지될 것으로 보이며, 보험사의 손해율 개선과 가입자 간 형평성 제고에 초점을 맞추고 있습니다.</p>
+
+                <h3 id="diff_premium">1. 보험료 차등제(할증·할인 제도) 상세 분석</h3>
+                <p>4세대 실손보험의 가장 핵심적인 특징은 보험료 차등제입니다. 이는 비급여 항목의 보험금 수령액에 따라 다음 해 보험료가 할인되거나 할증되는 제도입니다. 가입자는 1년 동안 비급여 진료를 받은 금액에 따라 다음 갱신 시점에 5단계로 구분된 할인/할증 등급을 적용받게 됩니다. 이 제도는 비급여 진료를 적게 이용하는 가입자에게는 혜택을 제공하고, 과도한 이용자에게는 부담을 가중시켜 불필요한 의료 이용을 줄이는 데 목적이 있습니다.</p>
+
+                <h4>등급별 보험료 변동 기준 (2026년 전망 포함)</h4>
+                <p>현행 차등제는 1년간 비급여 보험금 수령액이 0원인 경우 다음 해 보험료를 5% 할인해 줍니다. 반면, 수령액이 100만 원 이상일 경우 할증이 적용됩니다. 이 기준은 2026년까지도 유지될 것으로 보이지만, 금융당국은 비급여 항목별 관리 기준을 지속적으로 재조정할 가능성이 높습니다. 특히 미용 목적이나 과잉 진료 의혹이 있는 비급여 항목에 대한 관리는 더욱 강화될 것으로 예상됩니다.</p>
+                <div class="highlight">
+                    <p><strong>할증 예외:</strong> 암, 심장질환, 뇌혈관질환, 희귀난치성 질환 등 중증질환으로 인한 치료비는 할증 대상에서 제외됩니다. 이는 중증 환자의 의료 접근성을 보장하기 위한 조치입니다.</p>
+                </div>
+
+                <h3 id="noncover">2. 비급여 특약 보장 내역 변경 (3가지 특약)</h3>
+                <p>4세대 실손보험은 주계약(급여)과 비급여 특약이 분리되어 있습니다. 비급여 특약은 도수치료, 비급여 주사료, MRI/MRA 등 고액 비급여 진료에 대한 보장을 제공합니다. 4세대에서는 이 비급여 특약을 3가지로 분리하여 가입자가 필요한 항목만 선택할 수 있도록 했습니다.</p>
+
+                <h4>특약 1: 도수치료, 체외충격파치료, 증식치료</h4>
+                <p>이 특약은 주로 근골격계 질환 치료에 사용되는 비급여 항목을 보장합니다. 4세대 실손보험에서는 보장 한도와 횟수가 엄격하게 제한됩니다. 1년 동안 50회, 350만 원 한도 내에서 보장하며, 과잉 진료 방지를 위해 10회 치료 후 효과가 입증된 경우에만 추가 치료를 허용하는 방식으로 운영됩니다. 2026년에는 이와 관련된 의료기관의 진료비 청구 투명성이 더욱 강조될 전망입니다.</p>
+
+                <h4>특약 2: 비급여 주사료</h4>
+                <p>비급여 주사료는 주로 영양제 주사(마늘 주사, 비타민 주사 등)나 관절염 치료를 위한 주사 등이 해당됩니다. 4세대에서는 이 특약을 통해 연간 350만 원 한도로 보장받을 수 있습니다. 다만, 질병 치료 목적이 아닌 미용이나 건강 증진 목적의 주사는 보장에서 제외될 수 있습니다. 비급여 주사료는 보험료 할증의 주요 원인이 되는 경우가 많으므로 신중한 선택이 필요합니다.</p>
+
+                <h4>특약 3: 자기공명영상진단(MRI/MRA)</h4>
+                <p>MRI/MRA는 고가의 검사비용으로 인해 기존 실손보험의 손해율을 높이는 주범이었습니다. 4세대 실손보험에서는 이 특약을 연간 300만 원 한도로 보장하며, 급여 항목을 보장하는 주계약의 자기부담금(20%)보다 높은 비급여 자기부담금(30%)을 적용하여 가입자의 부담을 일부 늘렸습니다. 2026년에는 MRI 급여 확대 정책과 맞물려 실손보험의 보장 범위 조정이 논의될 수 있습니다.</p>
+
+                <div class="highlight">
+                    <p><strong>참고:</strong> 비급여 특약을 가입하지 않은 경우에도 주계약을 통해 급여 항목에 대한 보장은 받을 수 있습니다. 비급여 진료를 거의 받지 않는다고 판단되면 비급여 특약을 제외하고 가입하여 보험료를 절감하는 것이 '착한실손보험'의 주요 전략 중 하나입니다.</p>
+                </div>
+
+                <h2 id="compare">실손보험 세대별 비교: 4세대 착한실손보험의 위치는?</h2>
+
+                <p>실손보험은 시대의 흐름에 따라 여러 세대로 변화해 왔습니다. 각 세대별로 보장 범위, 자기부담금, 갱신 주기 등이 다르므로 자신의 가입 시점을 확인하고 세대별 차이를 이해하는 것이 중요합니다. 특히 4세대 실손보험은 1, 2세대와 비교하여 보험료가 저렴한 대신 자기부담금이 높고 비급여 보장이 분리되는 특징이 있습니다.</p>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>구분</th>
+                            <th>1세대 실손보험 (표준화 이전, ~2009.09)</th>
+                            <th>2세대 실손보험 (표준화 이후, 2009.10~2017.03)</th>
+                            <th>3세대 실손보험 (착한실손보험 이전, 2017.04~2021.06)</th>
+                            <th>4세대 실손보험 (착한실손보험, 2021.07~)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>주요 특징</strong></td>
+                            <td>보장 한도 높고 자기부담금 거의 없음. 보험료 매우 비쌈.</td>
+                            <td>보장 축소, 자기부담금 도입. 갱신 시 보험료 인상률 높음.</td>
+                            <td>급여/비급여 분리, 3대 비급여 특약(도수, 주사, MRI) 도입.</td>
+                            <td>비급여 보험료 차등제 도입. 보험료 저렴, 자기부담금 높음.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>갱신 주기</strong></td>
+                            <td>3년 또는 5년 갱신</td>
+                            <td>1년 갱신 (15년 재가입)</td>
+                            <td>1년 갱신 (15년 재가입)</td>
+                            <td>1년 갱신 (5년 재가입)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>자기부담금 (입원)</strong></td>
+                            <td>0원~5천원 (입원비의 0~10%)</td>
+                            <td>급여 10%, 비급여 10% (선택형 20%)</td>
+                            <td>급여 10%, 비급여 20%</td>
+                            <td>급여 20%, 비급여 30%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>자기부담금 (통원)</strong></td>
+                            <td>5천원 (병원 규모별)</td>
+                            <td>급여 1~2만원, 비급여 3만원 (선택형 20%)</td>
+                            <td>급여 1~2만원, 비급여 3만원</td>
+                            <td>급여 1~2만원, 비급여 3만원</td>
+                        </tr>
+                        <tr>
+                            <td><strong>보험료 차등제</strong></td>
+                            <td>미도입</td>
+                            <td>미도입</td>
+                            <td>미도입</td>
+                            <td><strong>도입 (비급여 이용량에 따라 할증)</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2 id="2026_change">2026년 실손보험 변화 전망 및 주요 정책 동향</h2>
+
+                <p>2026년은 4세대 실손보험이 도입된 지 5년차가 되는 해입니다. 실손보험은 매년 갱신되지만, 5년마다 재가입을 통해 보장 내용이 변경될 수 있습니다. 2026년에는 보험료 차등제의 효과가 본격적으로 나타나고, 비급여 항목에 대한 정부의 관리 강화 기조가 더욱 명확해질 것으로 예상됩니다.</p>
+
+                <h4>1. 비급여 항목의 급여 전환 가속화 (문재인 케어 이후 변화)</h4>
+                <p>국민건강보험공단은 비급여 항목의 급여 전환을 꾸준히 추진하고 있습니다. MRI, 초음파 등 고가 검사 항목에 대한 급여 확대가 대표적인 예입니다. 2026년에는 이러한 급여 전환이 더욱 가속화될 것으로 보이며, 이로 인해 실손보험의 비급여 보장 범위는 축소될 수 있습니다. 급여 전환된 항목은 국민건강보험의 보장을 받게 되므로, 실손보험의 역할이 비급여 영역에 더욱 집중될 것입니다.</p>
+
+                <h4>2. 보험료 할증·할인 제도의 정교화 및 확대 논의</h4>
+                <p>4세대 실손보험의 비급여 이용량에 따른 보험료 차등제는 2026년까지 그 적용 대상을 확대할 가능성이 있습니다. 현재는 비급여 특약에만 적용되지만, 향후에는 특정 비급여 항목에 대한 관리가 강화되거나 할인 폭이 조정될 수 있습니다. 금융위원회와 금융감독원은 실손보험의 지속 가능성을 위해 손해율 관리를 최우선 과제로 삼고 있으며, 이에 따라 제도가 더욱 정교화될 것입니다.</p>
+
+                <h4>3. 공적-사적 보험 연계 강화 및 정보 공유 확대</h4>
+                <p>실손보험 손해율을 관리하기 위해 공적 보험(국민건강보험)과 사적 보험(실손보험) 간의 정보 연계가 강화될 것으로 보입니다. 2026년에는 병원이 비급여 진료비를 청구할 때 환자의 실손보험 가입 여부 및 보장 내역을 확인하고 진료비를 청구하는 시스템이 도입될 가능성이 높습니다. 이는 과잉 진료를 예방하고 투명한 진료비 청구를 유도하기 위함입니다.</p>
+
+                <div class="graph-placeholder">
+                    <p><strong>[2026년 실손보험료 변동 예상 그래프]</strong></p>
+                    <p>(비급여 이용량에 따른 4세대 보험료 변동 추이 시뮬레이션)</p>
+                </div>
+
+                <h2 id="renewal">실손보험 가입 및 갱신 가이드: 현명한 선택을 위한 체크리스트</h2>
+
+                <p>실손보험은 가입 시기와 건강 상태에 따라 가입 조건이 크게 달라집니다. 특히 기존 실손보험을 유지할지, 4세대 실손보험으로 전환할지 고민하는 분들이 많습니다. 2026년에는 보험료 인상률이 높아질 것으로 예상되므로, 전환 여부를 신중하게 결정해야 합니다.</p>
+
+                <h3>1. 실손보험 가입 전 필수 체크리스트</h3>
+                <ul>
+                    <li><strong>현재 건강 상태:</strong> 현재 질병을 앓고 있거나 과거 치료 이력이 있다면 보험 가입이 거절될 수 있습니다. 특히 4세대 실손보험은 유병력자도 가입할 수 있는 상품이 있지만, 보험료가 일반 상품보다 비쌉니다.</li>
+                    <li><strong>비급여 진료 이용 빈도:</strong> 평소 도수치료나 비급여 주사를 자주 받는다면 4세대 실손보험의 보험료 차등제로 인해 할증이 붙을 수 있습니다. 기존 세대의 실손보험이 유리할 수 있습니다.</li>
+                    <li><strong>보험료 납입 여력:</strong> 4세대 실손보험은 초기 보험료가 저렴하지만, 갱신 시 인상될 수 있습니다. 장기적인 납입 계획을 세워야 합니다.</li>
+                    <li><strong>중복 가입 여부 확인:</strong> 실손보험은 실제 손해액을 보장하는 상품이므로 여러 개 가입하더라도 비례 보상됩니다. 중복 가입은 불필요한 보험료 낭비입니다. (<strong><a href="https://www.ins.or.kr/" target="_blank">보험개발원 실손보험 가입 조회</a></strong>)</li>
+                </ul>
+
+                <h3>2. 세대별 실손보험 전환 시 고려사항</h3>
+                <p>기존 1세대, 2세대, 3세대 실손보험 가입자들이 4세대로 전환할 때 가장 고민하는 부분입니다. 전환은 신규 가입과 달리 심사가 간소화되지만, 보장 내용이 변경되므로 신중해야 합니다.</p>
+
+                <p><strong>전환 추천 대상:</strong> 평소 비급여 진료를 거의 받지 않으며, 현재 보험료 인상률이 부담스러운 경우. 4세대로 전환하면 초기 보험료를 절감하고 비급여 이용 혜택(할인)을 받을 수 있습니다.</p>
+
+                <p><strong>전환 비추천 대상:</strong> 만성 질환으로 인해 비급여 진료를 꾸준히 받아야 하는 경우. 4세대 실손보험의 자기부담금이 높아지고, 비급여 이용 시 보험료 할증이 붙어 장기적으로 더 큰 손해를 볼 수 있습니다.</p>
+
+                <h2 id="faq">실손보험에 대한 자주 묻는 질문 (FAQ)</h2>
+
+                <h4>Q1. 실손보험 가입 시, 유병력자도 가능한가요?</h4>
+                <p>A. 네, 가능합니다. 4세대 실손보험은 유병력자 실손보험이 별도로 존재합니다. 일반 실손보험보다 가입 조건이 완화되어 경증 만성질환자나 과거 치료 이력이 있는 사람도 가입할 수 있습니다. 다만, 보험료가 일반 상품보다 비싸고 보장 범위가 일부 제한될 수 있습니다. (<strong><a href="https://www.fss.or.kr/fss/main/main.do" target="_blank">금융감독원 유병력자 실손보험 안내</a></strong>)</p>
+
+                <h4>Q2. 착한실손보험으로 전환하면 기존 실손보험의 보장이 사라지나요?</h4>
+                <p>A. 기존 실손보험을 해지하고 4세대 실손보험으로 신규 가입하는 방식이므로, 기존 보장은 사라집니다. 전환 후에는 4세대 실손보험의 보장 내용만 적용됩니다. 특히 1, 2세대 실손보험이 보장했던 일부 항목(해외 의료비 등)은 4세대에서 보장하지 않을 수 있으므로 약관을 꼼꼼히 확인해야 합니다.</p>
+
+                <h4>Q3. 실손보험 청구 절차는 어떻게 되나요?</h4>
+                <p>A. 보험금 청구는 병원에서 진료를 받은 후 진료비 영수증과 진료비 세부 내역서, 필요에 따라 진단서 등을 첨부하여 보험사에 접수합니다. 최근에는 모바일 앱을 통한 간편 청구 시스템이 활성화되어 있습니다. 2026년에는 '보험금 청구 간소화' 법안이 도입될 가능성이 높아져, 병원에서 직접 보험사로 서류를 전송하여 가입자가 더욱 편리하게 청구할 수 있게 될 전망입니다. (<strong><a href="https://www.nhis.or.kr/" target="_blank">국민건강보험공단 급여/비급여 확인</a></strong>)</p>
+
+                <h4>Q4. 착한실손보험료는 왜 저렴한가요?</h4>
+                <p>A. 4세대 실손보험은 크게 두 가지 이유로 기존 세대보다 저렴하게 설계되었습니다. 첫째, 비급여 항목의 자기부담금을 높여 가입자가 부담하는 비율을 늘렸습니다. 둘째, 비급여 이용량에 따라 보험료를 차등 적용하여 보험사의 손해율을 관리하도록 했기 때문입니다. 특히 비급여 이용이 적은 가입자에게는 할인 혜택을 제공합니다.</p>
+
+                <h2 id="final">결론: 2026년, 실손보험의 현명한 선택 기준</h2>
+
+                <p>4세대 실손보험은 기존 실손보험의 문제점을 개선하고 지속 가능한 보험 시스템을 구축하려는 금융당국의 의지가 반영된 상품입니다. 2026년에도 이 기조는 이어질 것이며, 가입자들은 자신의 의료 이용 성향을 고려하여 신중한 선택을 해야 합니다.</p>
+
+                <p><strong>비교 분석 및 가입 전략 요약:</strong></p>
+                <ul>
+                    <li><strong>현재 1~3세대 가입자:</strong> 비급여 진료를 자주 받는다면 기존 보험 유지를 고려하세요. 비급여 이용이 적다면 4세대로 전환하여 보험료를 절감할 수 있습니다.</li>
+                    <li><strong>신규 가입자:</strong> 4세대 실손보험을 선택할 때 비급여 특약의 가입 여부를 신중하게 결정해야 합니다. 비급여 특약을 가입하지 않으면 보험료는 저렴하지만 보장 범위가 좁아집니다.</li>
+                    <li><strong>2026년 변화 대응:</strong> 향후 비급여 항목에 대한 정부의 관리 강화에 대비하여, 가입 전에 보장 범위와 자기부담금 변경 가능성을 충분히 이해해야 합니다.</li>
+                </ul>
+
+                <p>착한실손보험은 모든 가입자에게 '착한' 보험이 아닐 수 있습니다. 개인의 건강 상태와 의료 이용 습관에 따라 장단점이 극명하게 갈립니다. 따라서 보험 전문가와 충분히 상담하고, 여러 보험사의 상품을 비교하여 최적의 선택을 하는 것이 중요합니다. (<strong><a href="https://www.insurancemuseum.or.kr/" target="_blank">보험연구원 자료 참고</a></strong>)</p>
+                
+                <div class="input-form">
+                    <h4>전문가 1:1 상담 신청</h4>
+                    <form>
+                        <label for="name">이름:</label>
+                        <input type="text" id="name" name="name" placeholder="이름을 입력하세요" required>
+                        <label for="phone">연락처:</label>
+                        <input type="text" id="phone" name="phone" placeholder="전화번호를 입력하세요" required>
+                        <label for="inquiry-content">상담 내용:</label>
+                        <textarea id="inquiry-content" name="inquiry-content" rows="4" placeholder="궁금한 점을 자세히 적어주세요."></textarea>
+                        <button type="submit">상담 요청하기</button>
+                    </form>
+                </div>
+
+                <div class="section-separator"></div>
+                <h4>참고 외부 사이트</h4>
+                <ul>
+                    <li><a href="https://www.fsc.go.kr/index.jsp" target="_blank">금융위원회</a>: 보험 정책 및 제도 관련 공식 발표 자료.</li>
+                    <li><a href="https://www.fss.or.kr/fss/main/main.do" target="_blank">금융감독원</a>: 소비자 보호 및 금융 상품 정보 제공.</li>
+                    <li><a href="https://www.ins.or.kr/" target="_blank">보험개발원</a>: 보험료 통계 및 상품 정보 분석 자료.</li>
+                    <li><a href="https://namu.wiki/w/%EC%8B%A4%EC%86%90%EB%B3%B4%ED%97%98" target="_blank">나무위키 - 실손보험</a>: 실손보험에 대한 상세 정보 및 역사적 배경.</li>
+                    <li><a href="https://www.nhis.or.kr/" target="_blank">국민건강보험공단</a>: 급여 항목 및 건강보험 관련 정보.</li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+    <script>
+        // Placeholder JavaScript for form functionality (for demonstration purposes)
+        function calculatePremium() {
+            const age = document.getElementById('age').value;
+            const gender = document.getElementById('gender').value;
+            const history = document.getElementById('history').value;
+            const resultElement = document.getElementById('calculation-result');
+
+            if (age && gender && history) {
+                let basePremium = 30000; // Placeholder base premium
+                if (age > 40) {
+                    basePremium += 10000;
+                }
+                if (gender === 'female') {
+                    basePremium -= 5000;
+                }
+                if (history === 'major') {
+                    basePremium += 15000;
+                }
+
+                resultElement.innerHTML = `예상 월 보험료: 약 ${basePremium.toLocaleString()}원 (4세대 실손 기준)`;
+                resultElement.style.display = 'block';
+            } else {
+                resultElement.innerHTML = '모든 필드를 입력해주세요.';
+                resultElement.style.display = 'block';
+            }
+        }
+    </script>
+
+
+  
